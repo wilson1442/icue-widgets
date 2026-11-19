@@ -46,7 +46,8 @@ i-cue/
 
 ### Housekeeping rules (keep the repo organized)
 
-- **Nothing else at the repo root.** Only `CLAUDE.md`, `widgets/`, `dist/`, `tools/`, `docs/` (plus `.gitignore`/`README.md` if added).
+- **Nothing else at the repo root.** Only `CLAUDE.md`, `widgets/`, `dist/`, `tools/`, `docs/`, `README.md`, `LICENSE` (Apache 2.0), and `.gitignore` if added.
+- **Keep `README.md` current:** it's the public GitHub page. Update its widgets table and screenshots whenever a widget is added or changes status.
 - **No scratch files in the repo.** Test screenshots, test harness pages, temp JSON, and downloaded references go in the session scratchpad, never in `widgets/` or the root. Anything inside `widgets/<name>/` gets packaged, so keep it to shipping files only.
 - **`dist/` naming:** `<widget-folder>-<version>.icuewidget`. Keep only the **latest** build per widget and delete older versions when you repackage.
 - **`tools/<name>/`:** one folder per helper, kebab-case, with a usage comment at the top of the main file. Name the widget it serves in the "Widgets in this repo" notes.
