@@ -1,0 +1,18 @@
+{
+  "author": "wilson1442",
+  "id": "com.wilson1442.unifistats",
+  "name": "UniFi Stats",
+  "description": "Live UniFi network stats: internet status, WAN throughput, clients, and device health from a UniFi OS console.",
+  "version": "1.0.0",
+  "preview_icon": "resources/icon.svg",
+  "min_app_version": "5.47",
+  "min_framework_version": "1.0.1",
+  "os": [{ "platform": "windows" }],
+  "supported_devices": [{ "type": "dashboard_lcd" }],
+  "interactive": false,
+  "permissions": [
+    { "type": "url", "domain": "192.168.0.1", "port": 443 },
+    { "type": "self_signed_certificate", "host": "192.168.0.1" },
+    { "type": "url", "domain": "localhost", "port": 8443 }
+  ]
+}

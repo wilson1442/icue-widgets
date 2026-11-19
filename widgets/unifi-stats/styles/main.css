@@ -1,0 +1,229 @@
+@font-face {
+  font-family: OpenSansRegular;
+  src: url("qrc:/fonts/OpenSans-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: OpenSansSemiBold;
+  src: url("qrc:/fonts/OpenSans-SemiBold.ttf");
+  font-weight: 600;
+}
+
+:root {
+  --text: #e8edf2;
+  --accent: #2d8cff;
+  --bg: #000000;
+  --muted: color-mix(in srgb, var(--text) 55%, transparent);
+  --card: color-mix(in srgb, var(--text) 6%, transparent);
+  --line: color-mix(in srgb, var(--text) 12%, transparent);
+  --good: #3ddc84;
+  --warn: #ffb020;
+  --bad: #ff4d4f;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--text);
+  background: transparent;
+  font-family: OpenSansRegular, "Segoe UI", system-ui, sans-serif;
+}
+
+body { container-type: size; container-name: tile; }
+
+#bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: -1;
+}
+
+/* ---------- Grid: adapts to the tile's shape ---------- */
+#app {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: 2.5cqmin;
+  padding: 3cqmin;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+body.has-banner #app { bottom: 6.5cqmin; }
+
+/* Wide tile (e.g. full 2560x720 Edge strip): one row of four */
+@container tile (min-aspect-ratio: 2.2 / 1) {
+  #app {
+    grid-template-columns: 1fr 1.5fr 1fr 1.1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+/* Tall tile (portrait mount): one column of four */
+@container tile (max-aspect-ratio: 1 / 1.6) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Cards ---------- */
+.card {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4cqmin;
+  container-type: size;
+  overflow: hidden;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  padding: 7cqmin 8cqmin;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqmin;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 3cqmin;
+  font-family: OpenSansSemiBold, "Segoe UI", sans-serif;
+  font-size: 9cqmin;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.big {
+  font-family: OpenSansSemiBold, "Segoe UI", sans-serif;
+  font-size: 22cqmin;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.big.accent { color: var(--accent); }
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqmin;
+  margin-top: auto;
+}
+
+.row,
+.meter {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4cqmin;
+  font-size: 7.5cqmin;
+  line-height: 1.25;
+  min-width: 0;
+}
+.k { color: var(--muted); white-space: nowrap; }
+.v {
+  font-family: OpenSansSemiBold, "Segoe UI", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dot {
+  width: 6cqmin;
+  height: 6cqmin;
+  border-radius: 50%;
+  background: var(--muted);
+  flex: none;
+}
+.dot.ok { background: var(--good); box-shadow: 0 0 4cqmin var(--good); }
+.dot.warn { background: var(--warn); box-shadow: 0 0 4cqmin var(--warn); }
+.dot.bad { background: var(--bad); box-shadow: 0 0 4cqmin var(--bad); }
+
+/* ---------- Throughput ---------- */
+.speeds {
+  display: flex;
+  gap: 8cqmin;
+  flex-wrap: wrap;
+}
+.speed {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5cqmin;
+  white-space: nowrap;
+}
+.speed .arrow { font-size: 11cqmin; }
+.speed .num {
+  font-family: OpenSansSemiBold, "Segoe UI", sans-serif;
+  font-size: 17cqmin;
+  line-height: 1;
+}
+.speed .unit { font-size: 8cqmin; color: var(--muted); }
+.speed.down .arrow { color: var(--accent); }
+.speed.up .arrow { color: var(--good); }
+
+#graph {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  display: block;
+}
+body.no-graph #graph { display: none; }
+
+/* ---------- Meters ---------- */
+.meter {
+  flex-wrap: wrap;
+  row-gap: 1.2cqmin;
+}
+.bar {
+  flex-basis: 100%;
+  height: 2.5cqmin;
+  border-radius: 2cqmin;
+  background: var(--line);
+  overflow: hidden;
+}
+.fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width 0.6s ease, background-color 0.6s ease;
+}
+.fill.warn { background: var(--warn); }
+.fill.bad { background: var(--bad); }
+
+/* ---------- Status banner ---------- */
+#banner {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2cqmin;
+  transform: translateX(-50%);
+  max-width: 92%;
+  padding: 1cqmin 3cqmin;
+  border-radius: 999px;
+  font-size: 3.6cqmin;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: color-mix(in srgb, var(--bg) 70%, var(--text) 12%);
+  border: 1px solid var(--line);
+  color: var(--text);
+  z-index: 5;
+}
+#banner.error { border-color: var(--bad); color: var(--bad); }
+#banner.demo { border-color: var(--warn); color: var(--warn); }
+#banner.hidden { display: none; }
+
+.stale .v,
+.stale .big,
+.stale .num { opacity: 0.45; }

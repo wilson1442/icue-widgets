@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tr('UniFi Stats')</title>
+    <link rel="icon" type="image/svg+xml" href="resources/icon.svg" />
+
+    <meta name="x-icue-property" content="unifiUrl" data-label="tr('Console URL')"
+          data-type="textfield" data-default="'https://192.168.0.1'" />
+    <meta name="x-icue-property" content="apiKey" data-label="tr('API Key')"
+          data-type="textfield" data-default="''" />
+    <meta name="x-icue-property" content="siteName" data-label="tr('Site')"
+          data-type="textfield" data-default="'default'" />
+    <meta name="x-icue-property" content="refreshSeconds" data-label="tr('Refresh')"
+          data-type="slider" data-default="5" data-min="2" data-max="60" data-step="1"
+          data-unit-label="'s'" />
+    <meta name="x-icue-property" content="speedUnit" data-label="tr('Speed Unit')"
+          data-type="tab-buttons" data-default="'mbps'"
+          data-values="[{'key':'mbps','value':tr('Mbps')},{'key':'mbs','value':tr('MB/s')}]" />
+    <meta name="x-icue-property" content="showGraph" data-label="tr('Throughput Graph')"
+          data-type="switch" data-default="true" />
+    <meta name="x-icue-property" content="textColor" data-label="tr('Text Color')"
+          data-type="color" data-default="'#E8EDF2'" />
+    <meta name="x-icue-property" content="accentColor" data-label="tr('Accent Color')"
+          data-type="color" data-default="'#2D8CFF'" />
+    <meta name="x-icue-property" content="backgroundColor" data-label="tr('Background')"
+          data-type="color" data-default="'#000000'" />
+
+    <script type="application/json" id="x-icue-groups">
+    [
+      {
+        "title": "tr('Connection')",
+        "properties": ["unifiUrl", "apiKey", "siteName", "refreshSeconds"],
+        "info": "tr('Create an API key in UniFi OS: Settings, Control Plane, Integrations.')"
+      },
+      {
+        "title": "tr('Display')",
+        "properties": ["speedUnit", "showGraph"]
+      },
+      {
+        "title": "tr('Style')",
+        "properties": ["textColor", "accentColor", "backgroundColor"]
+      }
+    ]
+    </script>
+
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div id="bg"></div>
+    <main id="app">
+      <section class="card" id="card-internet">
+        <div class="card-inner">
+          <div class="label"><span class="dot" id="wan-dot"></span><span data-tr="Internet">Internet</span></div>
+          <div class="big" id="wan-status">--</div>
+          <div class="rows">
+            <div class="row"><span class="k" data-tr="ISP">ISP</span><span class="v" id="wan-isp">--</span></div>
+            <div class="row"><span class="k" data-tr="WAN IP">WAN IP</span><span class="v" id="wan-ip">--</span></div>
+            <div class="row"><span class="k" data-tr="Latency">Latency</span><span class="v" id="wan-latency">--</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="card-throughput">
+        <div class="card-inner">
+          <div class="label" data-tr="Throughput">Throughput</div>
+          <div class="speeds">
+            <div class="speed down"><span class="arrow">&#8595;</span><span class="num" id="rx">--</span><span class="unit" id="rx-unit"></span></div>
+            <div class="speed up"><span class="arrow">&#8593;</span><span class="num" id="tx">--</span><span class="unit" id="tx-unit"></span></div>
+          </div>
+          <canvas id="graph"></canvas>
+        </div>
+      </section>
+
+      <section class="card" id="card-clients">
+        <div class="card-inner">
+          <div class="label" data-tr="Clients">Clients</div>
+          <div class="big accent" id="clients-total">--</div>
+          <div class="rows">
+            <div class="row"><span class="k" data-tr="Wi-Fi">Wi-Fi</span><span class="v" id="clients-wifi">--</span></div>
+            <div class="row"><span class="k" data-tr="Wired">Wired</span><span class="v" id="clients-wired">--</span></div>
+            <div class="row"><span class="k" data-tr="Guests">Guests</span><span class="v" id="clients-guest">--</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="card-devices">
+        <div class="card-inner">
+          <div class="label" data-tr="Devices">Devices</div>
+          <div class="rows">
+            <div class="row"><span class="k" data-tr="Access Points">Access Points</span><span class="v" id="dev-ap">--</span></div>
+            <div class="row"><span class="k" data-tr="Switches">Switches</span><span class="v" id="dev-sw">--</span></div>
+          </div>
+          <div class="meter"><span class="k" data-tr="Gateway CPU">Gateway CPU</span><span class="v" id="gw-cpu-v">--</span><div class="bar"><div class="fill" id="gw-cpu"></div></div></div>
+          <div class="meter"><span class="k" data-tr="Gateway RAM">Gateway RAM</span><span class="v" id="gw-mem-v">--</span><div class="bar"><div class="fill" id="gw-mem"></div></div></div>
+        </div>
+      </section>
+    </main>
+    <div id="banner" class="hidden"></div>
+
+    <script src="scripts/main.js"></script>
+  </body>
+</html>

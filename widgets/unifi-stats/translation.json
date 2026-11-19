@@ -1,0 +1,39 @@
+{
+  "en": {
+    "translation": {
+      "UniFi Stats": "UniFi Stats",
+      "Console URL": "Console URL",
+      "API Key": "API Key",
+      "Site": "Site",
+      "Refresh": "Refresh",
+      "Speed Unit": "Speed Unit",
+      "Mbps": "Mbps",
+      "MB/s": "MB/s",
+      "Throughput Graph": "Throughput Graph",
+      "Text Color": "Text Color",
+      "Accent Color": "Accent Color",
+      "Background": "Background",
+      "Connection": "Connection",
+      "Display": "Display",
+      "Style": "Style",
+      "Create an API key in UniFi OS: Settings, Control Plane, Integrations.": "Create an API key in UniFi OS: Settings, Control Plane, Integrations.",
+      "Internet": "Internet",
+      "ISP": "ISP",
+      "WAN IP": "WAN IP",
+      "Latency": "Latency",
+      "Throughput": "Throughput",
+      "Clients": "Clients",
+      "Wi-Fi": "Wi-Fi",
+      "Wired": "Wired",
+      "Guests": "Guests",
+      "Devices": "Devices",
+      "Access Points": "Access Points",
+      "Switches": "Switches",
+      "Gateway CPU": "Gateway CPU",
+      "Gateway RAM": "Gateway RAM",
+      "Online": "Online",
+      "Offline": "Offline",
+      "Degraded": "Degraded"
+    }
+  }
+}
